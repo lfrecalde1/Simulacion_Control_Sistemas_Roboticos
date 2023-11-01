@@ -2,3 +2,4 @@ numpy
 scipy==1.7.2
 sympy
 jupyter
+matplotlib
