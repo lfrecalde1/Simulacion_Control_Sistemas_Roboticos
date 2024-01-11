@@ -1,0 +1,55 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/factory/containers/protos/WoodenBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.3415430237367237 0.19122472021416706 0.920207296925964 2.1901180511954905
+  position 0.4621062971505251 -0.5656087729990148 0.5910947838335666
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2 2
+}
+WoodenBox {
+  translation -0.57 0 0.05
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.57 0.34 0.05
+  name "wooden box(1)"
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation 0.05 0.66 0.05
+  name "wooden box(2)"
+  size 0.1 0.1 0.1
+}
+WoodenBox {
+  translation -0.01 -0.67 0.05
+  name "wooden box(3)"
+  size 0.1 0.1 0.1
+}
+E-puck {
+  hidden position_0_0 28.522989975109866
+  hidden position_0_1 29.23186937426234
+  hidden linearVelocity_0 -0.00010996829156540184 -0.00012114589036181346 -2.087388783896628e-08
+  hidden angularVelocity_0 0.008076385525175353 -0.007331212933157963 5.821972176125521e-12
+  hidden rotation_1 0 1 0 1.2241188423417462
+  hidden linearVelocity_1 -0.00014662414712698186 -0.00016152758762582171 -2.3191937261128744e-11
+  hidden angularVelocity_1 0.008076385520131752 -0.007331212928479127 -9.404687734879588e-11
+  hidden rotation_2 0 0.9999999999999999 0 4.593261348302764
+  hidden linearVelocity_2 -0.0001466241469986647 -0.0001615275874918423 -2.3151081052903108e-11
+  hidden angularVelocity_2 0.00807638551997661 -0.007331212928597983 1.0569167820479578e-10
+  translation 0.3311675351829209 0.30446647117256126 -6.396274082216998e-05
+  rotation -5.7745722448055965e-05 0.0001304070107414136 0.9999999898297215 0.8337244824552382
+  controller "EPuckGoForward"
+}
