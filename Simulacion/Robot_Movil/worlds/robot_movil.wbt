@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.06399049226772723 -0.05955494368090616 -0.9961718855611706 4.636746240565936
-  position 0.25335089569425556 -1.1619198312009198 0.12432844173414336
+  orientation 0.18947413860766374 0.6614534313872131 -0.7256575700045891 0.7519247169411645
+  position -0.7366937875849556 0.5095176341076414 0.5039696272612852
 }
 TexturedBackground {
 }
@@ -18,150 +18,283 @@ RectangleArena {
   floorSize 3 3
 }
 Robot {
-  translation 0.061985317603533166 -0.017637994181261763 0.009389473031563796
+  translation -5.632231913592927e-13 0.11000000000057596 -7.698080820524311e-05
+  rotation -0.005115352447895751 0.9999869164990771 4.165442918988438e-08 5.118386836061646e-06
   children [
-    DEF Body_complete Group {
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.418010501858589e-11
+        axis 0 1 0
+        anchor 0 0.055 0.02
+      }
+      endPoint Solid {
+        translation 0 0.055 0.02
+        rotation 1 -1.7089806519124126e-11 1.7090240956331952e-11 1.570799693898005
+        children [
+          DEF rueda_izquierda Shape {
+            appearance PBRAppearance {
+              baseColor 0.643137 0 0
+              metalness 0.5
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.02
+            }
+          }
+        ]
+        boundingObject USE rueda_izquierda
+        physics Physics {
+          density -1
+          mass 0.012566370614359175
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1.3613568165555774e-06 1.3613568165555774e-06 2.513274122871835e-06
+            0 0 0
+          ]
+        }
+        linearVelocity 4.498036928724428e-07 -5.348857428596636e-14 -9.241386021588434e-08
+        angularVelocity 2.6807672330641887e-12 2.2490178432415476e-05 6.440757714938621e-13
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -3.263896001418872e-11
+        axis 0 1 0
+        anchor 0 -0.055 0.02
+      }
+      endPoint Solid {
+        translation 0 -0.055 0.02
+        rotation 1 -1.631923661162638e-11 1.6319668452626957e-11 1.5707996938980051
+        children [
+          DEF rueda_derecha Shape {
+            appearance PBRAppearance {
+              baseColor 0.643137 0 0
+              metalness 0.5
+            }
+            geometry Cylinder {
+              height 0.01
+              radius 0.02
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE rueda_derecha
+        physics Physics {
+          density -1
+          mass 0.012566370614359175
+          centerOfMass [
+            0 0 0
+          ]
+          inertiaMatrix [
+            1.3613568165555774e-06 1.3613568165555774e-06 2.513274122871835e-06
+            0 0 0
+          ]
+        }
+        linearVelocity 4.498038283114456e-07 -5.313065216174651e-14 -9.241401221109972e-08
+        angularVelocity 2.662927583240263e-12 2.249018520436377e-05 6.440756013260627e-13
+      }
+    }
+    Transform {
+      translation 0 0 0.025
       children [
-        Hinge2Joint {
-          jointParameters HingeJointParameters {
-            axis 0 0 1
-            anchor 0.085 0 0.005
+        DEF cuerpo Shape {
+          appearance PBRAppearance {
+            baseColor 0.458824 0.313726 0.482353
+            metalness 0
           }
-          jointParameters2 JointParameters {
-            axis 0 1 0
-          }
-          endPoint Solid {
-            translation 0.085 0 0.005
-            rotation -0.9999999999999999 0 0 1.5707953071795862
-            children [
-              DEF castor Shape {
-                appearance PBRAppearance {
-                  baseColor 0.643137 0 0
-                  metalness 0.5
-                }
-                geometry Cylinder {
-                  height 0.01
-                  radius 0.01
-                }
-              }
-            ]
-            name "solid(1)"
-          }
-        }
-        Hinge2Joint {
-          jointParameters HingeJointParameters {
-            axis 0 0 1
-            anchor -0.085 0 0.005
-          }
-          jointParameters2 JointParameters {
-            axis 0 1 0
-          }
-          endPoint Solid {
-            translation -0.085 0 0.005
-            rotation -0.9999999999999999 3.925233147823856e-16 0 1.5707953071795862
-            children [
-              DEF castor Shape {
-                appearance PBRAppearance {
-                  baseColor 0.643137 0 0
-                  metalness 0.5
-                }
-                geometry Cylinder {
-                  height 0.01
-                  radius 0.01
-                }
-              }
-            ]
-            name "solid(2)"
-          }
-        }
-        HingeJoint {
-          jointParameters HingeJointParameters {
-            position 16.6524004724336
-            axis 0 1 0
-            anchor 0 0 0.02
-            suspensionAxis 0 0 1
-          }
-          device [
-            PositionSensor {
-              name "left_sensor"
-            }
-            RotationalMotor {
-              name "left_motor"
-              maxTorque 20
-            }
-          ]
-          endPoint Solid {
-            translation 0 0.10600000000000011 0.02
-            rotation -0.2661130381600082 0.6816085525572535 -0.6816110562498646 3.6617617228140373
-            children [
-              DEF left Shape {
-                appearance PBRAppearance {
-                  baseColor 0.643137 0 0
-                  metalness 0.5
-                }
-                geometry Cylinder {
-                  height 0.01
-                  radius 0.03
-                }
-              }
-            ]
-            boundingObject USE left
-          }
-        }
-        Solid {
-          translation 0 0 0.029975369178726438
-          children [
-            DEF body Shape {
-              appearance PBRAppearance {
-                baseColor 0.203922 0.396078 0.643137
-                metalness 0.1
-              }
-              geometry Cylinder {
-                height 0.05
-                radius 0.1
-              }
-            }
-          ]
-          name "solid(5)"
-          boundingObject USE body
-        }
-        HingeJoint {
-          jointParameters HingeJointParameters {
-            position 25.3644766632531
-            axis 0 1 0
-            anchor 0 0 0.02
-            suspensionAxis 0 0 1
-          }
-          device [
-            PositionSensor {
-              name "right_sensor"
-            }
-            RotationalMotor {
-              name "right_motor"
-              maxTorque 50
-            }
-          ]
-          endPoint Solid {
-            translation 0 -0.10600000000000005 0.02
-            rotation 0.9867228266927041 0.11484329843644184 -0.11484372028020659 1.5841657047144952
-            children [
-              DEF right Shape {
-                appearance PBRAppearance {
-                  baseColor 0.643137 0 0
-                  metalness 0.5
-                }
-                geometry Cylinder {
-                  height 0.01
-                  radius 0.03
-                }
-              }
-            ]
-            name "solid(4)"
-            boundingObject USE right
+          geometry Cylinder {
+            height 0.04
+            radius 0.05
           }
         }
       ]
     }
   ]
-  selfCollision TRUE
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.055 0.02
+        rotation 1 0 0 1.5707996938995747
+        children [
+          USE rueda_izquierda
+        ]
+      }
+      Transform {
+        translation 0 -0.055 0.02
+        rotation 1 0 0 1.5707996938995747
+        children [
+          USE rueda_derecha
+        ]
+      }
+      Transform {
+        translation 0 0 0.025
+        children [
+          USE cuerpo
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.3392920065876977
+    centerOfMass [
+      0 0 0.024629629629629633
+    ]
+    inertiaMatrix [
+      0.0005233893360880597 0.00044966662848379315 0.0004714483375487346
+      0 0 7.75725230239637e-12
+    ]
+  }
+}
+Robot {
+  translation 0.3215850016969732 -0.033541899780274866 -8.98037783892136e-05
+  rotation 1.3002295309624233e-07 8.382579260249971e-09 0.9999999999999916 0.12876296248185232
+  children [
+    Transform {
+      translation 0.045 0 0.005
+      children [
+        DEF ball Shape {
+          appearance PBRAppearance {
+          }
+          geometry Sphere {
+            radius 0.005
+            subdivision 2
+          }
+        }
+      ]
+    }
+    Transform {
+      translation -0.045 0 0.005
+      children [
+        DEF ball Shape {
+          appearance PBRAppearance {
+          }
+          geometry Sphere {
+            radius 0.005
+            subdivision 2
+          }
+        }
+      ]
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 3.2525854396621305
+        axis 0 1 0
+        anchor 0 0.055 0.02
+      }
+      device [
+        RotationalMotor {
+          name "left_motor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.055 0.02
+        rotation -0.039252010871922524 0.7065605466259749 -0.7065631419725446 3.220056107064814
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.8 0 0
+              metalness 0.5
+            }
+            geometry DEF left Cylinder {
+              height 0.01
+              radius 0.02
+            }
+          }
+        ]
+        boundingObject USE left
+        physics Physics {
+        }
+        linearVelocity -1.7118827517527552e-16 9.856278997311167e-16 -1.0601621565411114e-15
+        angularVelocity -6.255643465506439e-14 -1.0713292527563713e-14 6.714028110053851e-16
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 1.7517667515051596
+        axis 0 1 0
+        anchor 0 -0.055 0.02
+      }
+      device [
+        RotationalMotor {
+          name "right_motor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.055 0.02
+        rotation 0.5078076151705161 0.6091505150511313 -0.6091527525898365 2.2018472702374243
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 0.8 0 0
+              metalness 0.5
+            }
+            geometry DEF left Cylinder {
+              height 0.01
+              radius 0.02
+            }
+          }
+        ]
+        name "solid(1)"
+        boundingObject USE left
+        physics Physics {
+        }
+        linearVelocity 1.886898243286395e-17 1.4975975213139152e-16 -4.947716533283339e-16
+        angularVelocity 1.4836778304434698e-14 1.8732586614058403e-15 1.1776104985896423e-15
+      }
+    }
+    Transform {
+      translation 0 0 0.025
+      children [
+        DEF body Shape {
+          appearance PBRAppearance {
+            baseColor 0.458824 0.313726 0.482353
+            metalness 0.5
+          }
+          geometry Cylinder {
+            height 0.04
+            radius 0.05
+          }
+        }
+      ]
+    }
+  ]
+  name "robot(1)"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0.045 0 0.005
+        children [
+          USE ball
+        ]
+      }
+      Transform {
+        translation -0.045 0 0.005
+        children [
+          USE ball
+        ]
+      }
+      Transform {
+        translation 0 0 0.025
+        children [
+          USE body
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 0.31415926535897937
+    centerOfMass [
+      0 0 0.025
+    ]
+    inertiaMatrix [
+      0.00043458698374658825 0.00043458698374658825 0.00039269908169872427
+      0 0 0
+    ]
+  }
+  linearVelocity -5.3141848378891634e-17 3.755123717723249e-16 1.8093822187881337e-16
+  angularVelocity -6.801788625883586e-15 -1.0218649589640981e-15 6.640473803289783e-16
 }
