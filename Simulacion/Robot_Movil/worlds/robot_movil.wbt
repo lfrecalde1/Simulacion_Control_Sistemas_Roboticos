@@ -7,8 +7,8 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/project
 WorldInfo {
 }
 Viewpoint {
-  orientation -0.2986107568703574 0.5652425483190443 0.7689814545560285 1.2039006580567064
-  position -0.2795035565358104 -0.3389343187666365 0.4386236056531152
+  orientation -0.1669416319404116 0.510563464419895 0.8434781801117481 0.7396483229597302
+  position -0.1307148001700622 -0.7025253675652139 0.44091453062295816
 }
 TexturedBackground {
 }
@@ -18,8 +18,8 @@ RectangleArena {
   floorSize 3 3
 }
 Robot {
-  translation -0.10933301079939879 0.11000000000000035 2.915408188624083e-05
-  rotation -2.6673418048559586e-07 0.9999999999999585 1.0836935759587531e-07 0.1003507255775865
+  translation -0.06653392422674519 0.10999602477335914 2.9154082117701513e-05
+  rotation 3.0001112487861426e-05 0.999999818822825 -0.0006012106539736047 0.10035074373358777
   children [
     InertialUnit {
     }
@@ -27,13 +27,14 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -0.005106957572738585
+        position 1.446825032920919
         axis 0 1 0
         anchor 0 0.055 0.02
       }
       device [
         RotationalMotor {
           name "motor_izquierdo"
+          maxTorque 50
         }
         PositionSensor {
           name "sensor_izquierdo"
@@ -41,7 +42,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0 0.055 0.02
-        rotation 0.9999934798032949 -0.002553459123411523 0.002553467721033308 1.5708062141144035
+        rotation 0.6250232602689826 0.5519709559356388 -0.5519728144811381 2.0243635969363756
         children [
           DEF rueda_izquierda Shape {
             appearance PBRAppearance {
@@ -66,19 +67,18 @@ Robot {
             0 0 0
           ]
         }
-        linearVelocity 5.72016981928226e-18 2.484898179387321e-16 -7.058856549235927e-16
-        angularVelocity -2.039843507859926e-14 1.7190470523363208e-15 -3.181962922543657e-17
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -0.005106861609634842
+        position 0.38464697697775574
         axis 0 1 0
         anchor 0 -0.055 0.02
       }
       device [
         RotationalMotor {
           name "motor_derecho"
+          maxTorque 50
         }
         PositionSensor {
           name "sensor_derecho"
@@ -86,7 +86,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0 -0.055 0.02
-        rotation 0.9999934800483368 -0.002553411141105878 0.002553419738565726 1.570806213869359
+        rotation 0.9641092398493358 0.18774069388199544 -0.18774132602557927 1.6073422274887257
         children [
           DEF rueda_derecha Shape {
             appearance PBRAppearance {
@@ -112,8 +112,6 @@ Robot {
             0 0 0
           ]
         }
-        linearVelocity -1.3558095868904664e-17 -1.1107302881463758e-16 7.112392249730895e-16
-        angularVelocity -1.0095628456861757e-17 2.900631164011822e-15 -7.288944706506942e-17
       }
     }
     Transform {
@@ -167,13 +165,16 @@ Robot {
       0 0 7.75725230239637e-12
     ]
   }
-  linearVelocity -1.0704640390508923e-17 7.044915595365906e-18 -4.188384765713272e-17
-  angularVelocity 2.137474662066014e-15 -2.28381702443901e-15 4.7944569815430497e-17
+  controller "robot_movil"
 }
 Robot {
-  translation 0.4901642042382177 -0.011715287961813273 -8.98037783892136e-05
-  rotation 1.3003901936660547e-07 8.382577497917125e-09 0.9999999999999916 0.12874707845800226
+  translation 0.504570333653055 -0.01121484613308508 -8.980394034031891e-05
+  rotation -7.432450560495745e-08 -1.3039263640525944e-08 -0.9999999999999971 0.1368781805206992
   children [
+    InertialUnit {
+    }
+    GPS {
+    }
     Transform {
       translation 0.045 0 0.005
       children [
@@ -202,18 +203,21 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 3.252585439663842
+        position 5.181719681662846
         axis 0 1 0
         anchor 0 0.055 0.02
       }
       device [
+        PositionSensor {
+          name "sensor_izquierdo"
+        }
         RotationalMotor {
-          name "left_motor"
+          name "motor_izquierdo"
         }
       ]
       endPoint Solid {
         translation 0 0.055 0.02
-        rotation -0.039252010872528074 0.7065605466259579 -0.7065631419725276 3.2200561070660227
+        rotation -0.7550085911450357 0.46365959925277317 -0.4636613023726976 4.434986937396968
         children [
           Shape {
             appearance PBRAppearance {
@@ -229,24 +233,25 @@ Robot {
         boundingObject USE left
         physics Physics {
         }
-        linearVelocity 2.802146916970355e-13 3.718961675835975e-14 1.1944749803719095e-14
-        angularVelocity -2.247425874876512e-12 1.6980105300818174e-11 -1.7473708712972063e-12
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 1.7517667515048492
+        position 1.7517667596618982
         axis 0 1 0
         anchor 0 -0.055 0.02
       }
       device [
+        PositionSensor {
+          name "sensor_derecho"
+        }
         RotationalMotor {
-          name "right_motor"
+          name "motor_derecho"
         }
       ]
       endPoint Solid {
         translation 0 -0.055 0.02
-        rotation 0.5078076151706513 0.6091505150512604 -0.6091527525895946 2.201847270237702
+        rotation 0.5078076120455092 0.6091505163539599 -0.6091527538921103 2.201847275206866
         children [
           Shape {
             appearance PBRAppearance {
@@ -263,8 +268,6 @@ Robot {
         boundingObject USE left
         physics Physics {
         }
-        linearVelocity -5.572500356603066e-14 -6.472060574662193e-15 1.2227465775403428e-14
-        angularVelocity 3.351021604761173e-13 -3.09117276454542e-12 -1.747195355140943e-12
       }
     }
     Transform {
@@ -317,6 +320,4 @@ Robot {
       0 0 0
     ]
   }
-  linearVelocity 5.302037742571323e-14 7.37024918146995e-15 -3.4512664603419266e-31
-  angularVelocity -6.9614553882027636e-15 -1.0218646778889473e-14 -1.7472738486923612e-12
 }
