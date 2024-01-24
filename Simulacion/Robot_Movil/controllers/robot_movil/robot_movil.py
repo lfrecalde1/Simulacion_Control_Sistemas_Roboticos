@@ -2,10 +2,20 @@
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Robot, GPS, InertialUnit
+from controller import Robot, GPS, InertialUnit, PositionSensor
 import sys
 import time
 import numpy as np
+
+def get_sensor_pos(name, time_step):
+    # Motor Configuration
+    # INPUTS
+    # name                                              - device name  
+    # OUTPUT
+    # pose                                             - device motor         
+    pose = PositionSensor(name)
+    pose.enable(time_step)
+    return pose
 
 def get_motor(robot, name):
     # Motor Configuration
@@ -62,6 +72,24 @@ def set_imu(name, time_step):
     imu = InertialUnit(name)
     imu.enable(time_step)
     return imu
+def get_angular_pos(pos, time_step):
+    # Function to obtain the angular displacement of the motors
+    # INPUTS
+    # pos                                               - This is the object that containts the angular displacement information
+    # time_step                                         - sample time of the simulation
+    # OUTPUT
+    # data                                              - angular displacement
+    data = pos.getValue()
+    return data
+
+def get_angular_vel(motor):
+    # Function to obtain the angular displacement of the motors
+    # INPUTS
+    # motor                                             - Object that contains the information of the sensor
+    # OUTPUT
+    # data                                              - angular displacement
+    data = motor.getVelocity()
+    return data
 
 def get_states(robot, gps, imu, time_step, L):
     # split internal values
@@ -104,6 +132,9 @@ def main(robot):
     gps = set_gps("gps", time_step)
     imu = set_imu("inertial unit", time_step)
 
+    motor_left_sensor_pos = get_sensor_pos("sensor_izquierdo", time_step)
+    motor_right_sensor_pos = get_sensor_pos("sensor_derecho", time_step)
+
     # Parameters of the robot
     r = 0.190/2
     l = 0.381
@@ -120,15 +151,31 @@ def main(robot):
 
             # Send control values to the robot
             set_motors_velocity(motor_right, motor_left, u[:, k])
+
+            # Get new information of the system
             print('Moving Robot')
             print("States of the robot")
             print(x[:, k])
             x[: , k+1] = get_states(robot, gps, imu, time_step, L)
+            theta_l = get_angular_pos(motor_left_sensor_pos, time_step)
+            theta_r = get_angular_pos(motor_right_sensor_pos, time_step)
+            print("Angular displacement of left and right")
+            print(theta_l)
+            print(theta_r)
+
+            w_l = get_angular_vel(motor_left)
+            w_r = get_angular_vel(motor_right)
+            print("Angular velocity of left and right")
+            print(w_l)
+            print(w_r)
+
+
 
             # Sample time saturation
             while (time.time() - tic <= t_s):
                 None
             toc = time.time() - tic 
+            print("Sample Time")
             print(toc)
 
     # Set zero values to the robot 
