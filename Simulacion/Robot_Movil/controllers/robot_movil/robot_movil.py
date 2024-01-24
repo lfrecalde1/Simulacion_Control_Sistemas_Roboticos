@@ -2,7 +2,7 @@
 
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
-from controller import Robot
+from controller import Robot, GPS, InertialUnit
 import sys
 import time
 import numpy as np
@@ -41,6 +41,40 @@ def set_motors_velocity(motor_r, motor_l, w):
     motor_l.setVelocity(w_l)
     return None
 
+def set_gps(name, time_step):
+    # Motor configuration
+    # INPUTS
+    # name                                  - defined name of the sensor
+    # time_step                             - sample time defined in the simulation
+    # OUTPUT                                    
+    # gps                                   - object with all the necessary attributes to access the information of the sensor
+    gps = GPS(name)
+    gps.enable(time_step)
+    return gps
+
+def set_imu(name, time_step):
+    # IMU configuration
+    # INPUTS
+    # name                                  - defined name of the sensor
+    # time_step                             - sample time defined in the simulation
+    # OUTPUT                                    
+    # imu                                   - object with all the necessary attributes to access the information of the sensor
+    imu = InertialUnit(name)
+    imu.enable(time_step)
+    return imu
+
+def get_states(robot, gps, imu, time_step, L):
+    # split internal values
+    r = L[0] 
+    l = L[1]
+    a = L[2]
+    if robot.step(time_step) != -1:
+        position = gps.getValues()
+        orientation = imu.getRollPitchYaw()
+        data = [position[0] + a*np.cos(orientation[2]), position[1] + a*np.sin(orientation[2]), orientation[2]]
+    x = np.array(data)
+    return x
+
 def main(robot):
     # Get the time step of the current world.
     time_step = int(robot.getBasicTimeStep())
@@ -50,6 +84,9 @@ def main(robot):
     t_s = 0.03
     # Time simulation
     t = np.arange(0, t_final + t_s, t_s, dtype=np.double)
+
+    # System states
+    x = np.zeros((3, t.shape[0]+1), dtype = np.double)
 
     # Signals designed to move the motors
     u = np.zeros((2, t.shape[0]), dtype = np.double)
@@ -62,6 +99,19 @@ def main(robot):
     motor_left = set_motor(motor_left)
     motor_right = set_motor(motor_right)
 
+    # Robot Sensors
+    # Get system sensors
+    gps = set_gps("gps", time_step)
+    imu = set_imu("inertial unit", time_step)
+
+    # Parameters of the robot
+    r = 0.190/2
+    l = 0.381
+    a = 0.01
+    L = [r, l ,a]
+
+
+    # SImulation loop
     for k in range(0, t.shape[0]):
         if robot.step(time_step) != -1:
             tic = time.time()
@@ -71,6 +121,9 @@ def main(robot):
             # Send control values to the robot
             set_motors_velocity(motor_right, motor_left, u[:, k])
             print('Moving Robot')
+            print("States of the robot")
+            print(x[:, k])
+            x[: , k+1] = get_states(robot, gps, imu, time_step, L)
 
             # Sample time saturation
             while (time.time() - tic <= t_s):

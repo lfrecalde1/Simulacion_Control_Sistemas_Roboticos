@@ -18,164 +18,8 @@ RectangleArena {
   floorSize 3 3
 }
 Robot {
-  translation -0.06653392422544727 0.10999602477337826 2.9154082117694574e-05
-  rotation 3.0001112531395365e-05 0.9999998188228247 -0.0006012106542683183 0.10035074373358745
-  children [
-    InertialUnit {
-    }
-    GPS {
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 1.446825032920893
-        axis 0 1 0
-        anchor 0 0.055 0.02
-      }
-      device [
-        RotationalMotor {
-          name "motor_izquierdo"
-          maxTorque 50
-        }
-        PositionSensor {
-          name "sensor_izquierdo"
-        }
-      ]
-      endPoint Solid {
-        translation 0 0.055 0.02
-        rotation 0.625023260268983 0.5519709559356213 -0.5519728144811548 2.02436359693633
-        children [
-          DEF rueda_izquierda Shape {
-            appearance PBRAppearance {
-              baseColor 0.643137 0 0
-              metalness 0.5
-            }
-            geometry Cylinder {
-              height 0.01
-              radius 0.02
-            }
-          }
-        ]
-        boundingObject USE rueda_izquierda
-        physics Physics {
-          density -1
-          mass 0.012566370614359175
-          centerOfMass [
-            0 0 0
-          ]
-          inertiaMatrix [
-            1.3613568165555774e-06 1.3613568165555774e-06 2.513274122871835e-06
-            0 0 0
-          ]
-        }
-        linearVelocity -5.016880105923442e-13 1.3742194546358825e-15 9.344484850122946e-09
-        angularVelocity 1.3569928804013522e-15 -2.5157531959581465e-11 5.451114744007519e-13
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        position 0.38464697697916256
-        axis 0 1 0
-        anchor 0 -0.055 0.02
-      }
-      device [
-        RotationalMotor {
-          name "motor_derecho"
-          maxTorque 50
-        }
-        PositionSensor {
-          name "sensor_derecho"
-        }
-      ]
-      endPoint Solid {
-        translation 0 -0.055 0.02
-        rotation 0.9641092398494191 0.18774069388138653 -0.18774132602576002 1.6073422274859226
-        children [
-          DEF rueda_derecha Shape {
-            appearance PBRAppearance {
-              baseColor 0.643137 0 0
-              metalness 0.5
-            }
-            geometry Cylinder {
-              height 0.01
-              radius 0.02
-            }
-          }
-        ]
-        name "solid(1)"
-        boundingObject USE rueda_derecha
-        physics Physics {
-          density -1
-          mass 0.012566370614359175
-          centerOfMass [
-            0 0 0
-          ]
-          inertiaMatrix [
-            1.3613568165555774e-06 1.3613568165555774e-06 2.513274122871835e-06
-            0 0 0
-          ]
-        }
-        linearVelocity -2.8528918050452813e-13 -5.3475150724476696e-15 9.344165805149448e-09
-        angularVelocity -7.07936068655773e-14 -1.0777985730264281e-11 5.449198785216635e-13
-      }
-    }
-    Transform {
-      translation 0 0 0.025
-      children [
-        DEF cuerpo Shape {
-          appearance PBRAppearance {
-            baseColor 0.458824 0.313726 0.482353
-            metalness 0
-          }
-          geometry Cylinder {
-            height 0.04
-            radius 0.05
-          }
-        }
-      ]
-    }
-  ]
-  boundingObject Group {
-    children [
-      Transform {
-        translation 0 0.055 0.02
-        rotation 1 0 0 1.5707996938995747
-        children [
-          USE rueda_izquierda
-        ]
-      }
-      Transform {
-        translation 0 -0.055 0.02
-        rotation 1 0 0 1.5707996938995747
-        children [
-          USE rueda_derecha
-        ]
-      }
-      Transform {
-        translation 0 0 0.025
-        children [
-          USE cuerpo
-        ]
-      }
-    ]
-  }
-  physics Physics {
-    density -1
-    mass 0.3392920065876977
-    centerOfMass [
-      0 0 0.024629629629629633
-    ]
-    inertiaMatrix [
-      0.0005233893360880597 0.00044966662848379315 0.0004714483375487346
-      0 0 7.75725230239637e-12
-    ]
-  }
-  controller "<none>"
-  linearVelocity -5.844998206858511e-13 -2.9278733355315536e-15 -1.181585226255287e-12
-  angularVelocity 4.1361049744220554e-15 -2.4877819697231e-11 5.451966594702741e-13
-}
-Robot {
-  translation 0.5422817960873094 -0.016399215319727007 -8.980377811487056e-05
-  rotation -9.649738945148029e-09 -4.0980955809314247e-07 -0.9999999999999161 0.1368782818609811
+  translation 0.5540067062631258 -0.01801055999880447 -8.98037326033975e-05
+  rotation -3.816836377725215e-05 -0.0005579242509644635 -0.9999998436318408 0.13687832147786924
   children [
     InertialUnit {
     }
@@ -209,7 +53,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 7.085719171766378
+        position 7.677719019438842
         axis 0 1 0
         anchor 0 0.055 0.02
       }
@@ -223,7 +67,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0 0.055 0.02
-        rotation -0.8574808486598129 -0.36381700192993977 0.3638183383068498 4.559231186899543
+        rotation -0.6450629493469806 -0.5403201118865272 0.540322096596748 4.287382709898208
         children [
           Shape {
             appearance PBRAppearance {
@@ -239,13 +83,13 @@ Robot {
         boundingObject USE left
         physics Physics {
         }
-        linearVelocity 8.76582331914811e-09 -1.2066182082875376e-09 9.698394711194975e-09
-        angularVelocity 5.9219850187375105e-08 4.30213017816846e-07 -1.666145350778759e-13
+        linearVelocity 0.009900258395986154 -0.0013612380361749605 3.21959054789614e-09
+        angularVelocity 0.06820387846462589 0.4951652985970635 -5.3764594914123676e-08
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 3.655766249365253
+        position 4.247766096992192
         axis 0 1 0
         anchor 0 -0.055 0.02
       }
@@ -259,7 +103,7 @@ Robot {
       ]
       endPoint Solid {
         translation 0 -0.055 0.02
-        rotation -0.18277054965341796 0.6951947121770627 -0.6951972657745703 3.5031418284842304
+        rotation -0.40008057900796357 0.6480480094270639 -0.6480503898450125 3.9027417996686613
         children [
           Shape {
             appearance PBRAppearance {
@@ -276,8 +120,8 @@ Robot {
         boundingObject USE left
         physics Physics {
         }
-        linearVelocity 8.765792202786052e-09 -1.2066010429482777e-09 9.702533955736852e-09
-        angularVelocity 5.9219590424124146e-08 4.3021107193863004e-07 -1.6556737237686404e-13
+        linearVelocity 0.009900254871724338 -0.0013612375507291883 1.7390494115759538e-09
+        angularVelocity 0.06820387845019737 0.49516529845565815 -5.3751358854862355e-08
       }
     }
     Transform {
@@ -331,6 +175,6 @@ Robot {
     ]
   }
   controller "robot_movil"
-  linearVelocity 1.043184945226723e-08 -1.436021514183307e-09 -1.8252595477579996e-12
-  angularVelocity 5.9220819445372455e-08 4.302194605383335e-07 -1.6618496757276807e-13
+  linearVelocity 0.009899337526811974 -0.001361109725107244 -1.293129736469058e-10
+  angularVelocity -2.1743179171931176e-05 -0.0001579577619422657 -5.121815548662188e-08
 }
