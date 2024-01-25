@@ -44,7 +44,7 @@ def main(robot):
     
 
     # Init System
-    init_system(robot, motors, [0.0, 0.0, 0.0, 0.0, 0.0], time_step, t_s)
+    init_system(robot, motors, [0.0, -0.3, -0.8, -1.5, 0.0], time_step, t_s)
     # get initial conditions of the system
     q[:, 0] = get_angular_position(robot, sensors, time_step)
 
@@ -55,7 +55,7 @@ def main(robot):
             print("Angular displacement")
             print(q[:, k])
             # Compute desired values
-            qp_c[:, k] = [0.1, 0.0, 0.0, 0.0, 0.0]
+            qp_c[:, k] = [0.0, 0.0, 0.0, 0.0, 0.0]
 
             # actuate the rotational motors of the system
             set_motor_vel(motors, qp_c[:, k])
@@ -145,7 +145,7 @@ def init_system(robot, motors, q_c, time_step, t_s):
     # ts                                           - sample time of the simulation
     # OUTPUT
     # None
-    for k in range(0, 50):
+    for k in range(0, 100):
          if robot.step(time_step) != -1:
             tic = time.time()
             print("Init System")
