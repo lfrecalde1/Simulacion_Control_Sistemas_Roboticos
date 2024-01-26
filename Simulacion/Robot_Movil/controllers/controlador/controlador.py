@@ -7,6 +7,72 @@ from controller import Robot, GPS, InertialUnit, PositionSensor
 import sys
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+
+def plot_results(x, xd, t):
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+
+    # Plot x_estimate with label 'x_estimate'
+    ax1.set_xticklabels([])
+    state_1, = ax1.plot(t, x[0, 0:t.shape[0]], color='#C04747', lw=1.5, ls="-")
+    state_2, = ax2.plot(t, x[1, 0:t.shape[0]], color='#47C05B', lw=1.5, ls="-")
+    state_3, = ax1.plot(t, xd[0, 0:t.shape[0]], color='#C04747', lw=1.5, ls="--")
+    state_4, = ax2.plot(t, xd[1, 0:t.shape[0]], color='#47C05B', lw=1.5, ls="--")
+    # Add a legend
+    ax1.legend([state_1, state_3],
+                [r'x', r'x_d'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+             
+    ax2.legend([state_2, state_4],
+                [r'y', r'y_d'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+    
+    
+    
+    ax1.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    
+    ax2.set_xlabel(r"$Time}[s]$", labelpad=5)
+    # Show the plot
+    plt.show()
+
+def plot_results_control(x, t):
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+
+    # Plot x_estimate with label 'x_estimate'
+    ax1.set_xticklabels([])
+    state_1, = ax1.plot(t, x[0, 0:t.shape[0]], color='#C04747', lw=1.5, ls="-")
+    state_2, = ax2.plot(t, x[1, 0:t.shape[0]], color='#47C05B', lw=1.5, ls="-")
+    # Add a legend
+    ax1.legend([state_1],
+                [r'u'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+             
+    ax2.legend([state_2],
+                [r'w'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+    
+    
+    
+    ax1.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    
+    ax2.set_xlabel(r"$Time}[s]$", labelpad=5)
+    # Show the plot
+    plt.show()
+
 
 def get_sensor_pos(name, time_step):
     # Motor Configuration
@@ -137,12 +203,15 @@ def transformation(u, L):
 
 def law_control(xd, xdp, x, k1, k2, L):
     # Function that computes the control values to move the system to a desired states
+    # INPUT
     # xd                                          - Desired state in the plane x y
     # xdp                                         - Time derivative of the desired state
     # x                                           - Current state of the system
     # k1                                          - Controller gain value
     # k2                                          - Controller gain value
     # L                                           - A list that contains system parameters
+    # OUTPUT
+    # u                                           - control action
 
     # Split system parameters
     r = L[0] 
@@ -181,7 +250,7 @@ def main(robot):
     # Get the time step of the current world.
     time_step = int(robot.getBasicTimeStep())
     # Time Definition
-    t_final = 20
+    t_final = 10
     # Sample time
     t_s = 0.03
     # Time simulation
@@ -236,10 +305,8 @@ def main(robot):
         if robot.step(time_step) != -1:
             tic = time.time()
             # Control law
+            # Control
             u[:, k] = law_control(xd[:, k], xdp[:, k], x[:, k], k1, k2, L)
-            print(xd[:, k])
-            print(x[:, k])
-            print(u[:, k])
             w = transformation(u[:, k], L)
 
             # Send control values to the robot
@@ -255,6 +322,8 @@ def main(robot):
 
     # Set zero values to the robot 
     set_motors_velocity(motor_right, motor_left, np.array([[0], [0]]))
+    plot_results(x, xd, t)
+    plot_results_control(u, t)
     return None
 # Enter here exit cleanup code.
 if __name__ == '__main__':
