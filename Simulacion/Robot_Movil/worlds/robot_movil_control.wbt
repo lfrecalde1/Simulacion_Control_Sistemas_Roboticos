@@ -15,11 +15,11 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 3 3
+  floorSize 5 5
 }
 Robot {
-  translation 0.5540067062631258 -0.01801055999880447 -8.98037326033975e-05
-  rotation -3.816836377725215e-05 -0.0005579242509644635 -0.9999998436318408 0.13687832147786924
+  translation 0.6333618333914517 -0.029361689880447305 -8.98037222497941e-05
+  rotation -1.65746384132225e-05 -0.0002580333235956499 -0.9999999665720422 0.13688379079584317
   children [
     InertialUnit {
     }
@@ -53,7 +53,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 7.677719019438842
+        position 11.837718959812817
         axis 0 1 0
         anchor 0 0.055 0.02
       }
@@ -63,11 +63,12 @@ Robot {
         }
         RotationalMotor {
           name "motor_izquierdo"
+          maxVelocity 30
         }
       ]
       endPoint Solid {
         translation 0 0.055 0.02
-        rotation -0.6450629493469805 -0.5403201118865272 0.5403220965967481 4.287382709898208
+        rotation 0.8801596035511481 -0.3356473183518112 0.33564855125551135 1.6981067137806463
         children [
           Shape {
             appearance PBRAppearance {
@@ -87,7 +88,7 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 4.247766096992192
+        position 8.407766037195612
         axis 0 1 0
         anchor 0 -0.055 0.02
       }
@@ -97,11 +98,12 @@ Robot {
         }
         RotationalMotor {
           name "motor_derecho"
+          maxVelocity 30
         }
       ]
       endPoint Solid {
         translation 0 -0.055 0.02
-        rotation -0.40008057900796357 0.6480480094270642 -0.6480503898450121 3.9027417996686617
+        rotation -0.3666870676180315 -0.6578515847569023 0.6578540011845494 3.844515833226855
         children [
           Shape {
             appearance PBRAppearance {

@@ -196,8 +196,8 @@ def main(robot):
     xd[1, :] = 0*np.ones((1, t.shape[0]))
 
     xdp = np.zeros((2, t.shape[0]), dtype = np.double)
-    xdp[0, :] = 0.5*np.ones((1, t.shape[0]))
-    xdp[1, :] = 0*np.ones((1, t.shape[0]))
+    xdp[0, :] = 0.0*np.ones((1, t.shape[0]))
+    xdp[1, :] = 0.0*np.ones((1, t.shape[0]))
 
     # Signals designed to move the motors
     u = np.zeros((2, t.shape[0]), dtype = np.double)
@@ -221,12 +221,12 @@ def main(robot):
     # Parameters of the robot
     r = 0.02
     l = 0.11
-    a = 0.02
+    a = 0.055
     L = [r, l ,a]
 
     # Control gains
-    k1 = 1.0
-    k2 = 0.05
+    k1 = 1
+    k2 = 0.5
 
     # Get initial position
     x[: , 0] = get_states(robot, gps, imu, time_step, L)
@@ -237,6 +237,9 @@ def main(robot):
             tic = time.time()
             # Control law
             u[:, k] = law_control(xd[:, k], xdp[:, k], x[:, k], k1, k2, L)
+            print(xd[:, k])
+            print(x[:, k])
+            print(u[:, k])
             w = transformation(u[:, k], L)
 
             # Send control values to the robot
