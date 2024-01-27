@@ -57,7 +57,7 @@ def main(robot):
 
     # Control Gains
     k1 = 1.0
-    k2 = 1.0
+    k2 = 0.5
 
     # Kuka Youbot Parameters
     a0 = 0.156
@@ -69,7 +69,7 @@ def main(robot):
     L = [a0, a1, d1, a2, a3, a4]
 
     # Init System
-    init_system(robot, motors, [0.0, -0.0, 0.0, 0.0, -0.0], time_step, t_s)
+    init_system(robot, motors, [0.0, -0.1, -0.1, -0.2, -0.0], time_step, t_s)
     # get initial conditions of the system
     q[:, 0] = get_angular_position(robot, sensors, time_step)
     x[:, 0] = forward_kinematics(q[:, 0], L)
