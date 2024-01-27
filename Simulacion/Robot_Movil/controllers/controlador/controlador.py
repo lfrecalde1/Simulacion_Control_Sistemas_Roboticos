@@ -261,12 +261,12 @@ def main(robot):
 
     # Desired system states
     xd = np.zeros((2, t.shape[0]), dtype = np.double)
-    xd[0, :] = 1*np.ones((1, t.shape[0]))
-    xd[1, :] = 0*np.ones((1, t.shape[0]))
+    xd[0, :] = 0.5
+    xd[1, :] = 0.5
 
     xdp = np.zeros((2, t.shape[0]), dtype = np.double)
-    xdp[0, :] = 0.0*np.ones((1, t.shape[0]))
-    xdp[1, :] = 0.0*np.ones((1, t.shape[0]))
+    xdp[0, :] = 0.0
+    xdp[1, :] = 0.0
 
     # Signals designed to move the motors
     u = np.zeros((2, t.shape[0]), dtype = np.double)
@@ -295,7 +295,7 @@ def main(robot):
 
     # Control gains
     k1 = 1
-    k2 = 0.5
+    k2 = 0.3
 
     # Get initial position
     x[: , 0] = get_states(robot, gps, imu, time_step, L)
