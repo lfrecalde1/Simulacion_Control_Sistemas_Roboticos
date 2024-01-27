@@ -1,10 +1,11 @@
 """youbot_controller controller."""
 # You may need to import some classes of the controller module
 # For instance From controller import Robot, Motor and more
-from controller import Robot, PositionSensor
+from controller import Robot, PositionSensor, Supervisor
 import sys
 import time
 import numpy as np
+import matplotlib.pyplot as plt
 def main(robot):
     # A function that executes the algorithm to obtain sensor data and actuate motors
     # An object instante that contains all possible information about the robot
@@ -12,7 +13,7 @@ def main(robot):
     time_step = int(robot.getBasicTimeStep())
 
     # Time definition
-    t_final = 20
+    t_final = 10
 
     # Sample time
     t_s = 0.03
@@ -68,16 +69,22 @@ def main(robot):
     a4 = 0.218
     L = [a0, a1, d1, a2, a3, a4]
 
+    # DEsired states object
+    supervisor_node = robot.getFromDef('ball')
+    translation_field = supervisor_node.getField('translation')
+
     # Init System
     init_system(robot, motors, [0.0, -0.1, -0.1, -0.2, -0.0], time_step, t_s)
     # get initial conditions of the system
     q[:, 0] = get_angular_position(robot, sensors, time_step)
     x[:, 0] = forward_kinematics(q[:, 0], L)
+    xd[:, 0] =  translation_field.getSFVec3f()
 
     # Simulation loop
     for k in range(0, t.shape[0]):
          if robot.step(time_step) != -1:
             tic = time.time()
+            print(xd[:, k])
             # Compute desired values
             qp_c[:, k ] = control_law(xd[:, k], xdp[:, k], q[:, k], L, k1, k2)
 
@@ -87,10 +94,14 @@ def main(robot):
             # Get current states of the system
             q[:, k + 1] = get_angular_position(robot, sensors, time_step)
             x[:, k + 1] = forward_kinematics(q[:, k+1], L)
+            xd[:, k +1] =  translation_field.getSFVec3f()
             # Sample time saturation
             while (time.time() - tic <= t_s):
                 None
             toc = time.time() - tic 
+    set_motor_vel(motors, [0.0, 0.0, 0.0, 0.0, 0.0])
+    plot_results(x, xd, t)
+    plot_results_control(q, qp_c, t)
     return None
 def forward_kinematics(q, L):
     # Function that computes the forwrd kinematics
@@ -267,10 +278,85 @@ def init_system(robot, motors, q_c, time_step, t_s):
             toc = time.time() - tic 
     return None
 
+def plot_results(x, xd, t):
+    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 10))
 
+    # Plot x_estimate with label 'x_estimate'
+    ax1.set_xticklabels([])
+    state_1, = ax1.plot(t, x[0, 0:t.shape[0]], color='#C04747', lw=1.5, ls="-")
+    state_2, = ax2.plot(t, x[1, 0:t.shape[0]], color='#47C05B', lw=1.5, ls="-")
+    state_3, = ax3.plot(t, x[2, 0:t.shape[0]], color='#478DC0', lw=1.5, ls="-")
+    state_1_1, = ax1.plot(t, xd[0, 0:t.shape[0]], color='#C04747', lw=1.5, ls="--")
+    state_2_1, = ax2.plot(t, xd[1, 0:t.shape[0]], color='#47C05B', lw=1.5, ls="--")
+    state_3_1, = ax3.plot(t, xd[2, 0:t.shape[0]], color='#478DC0', lw=1.5, ls="--")
+    # Add a legend
+    ax1.legend([state_1, state_1_1],
+                [r'x', r'x_d'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+             
+    ax2.legend([state_2, state_2_1],
+                [r'y', r'y_d'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+
+    ax3.legend([state_3, state_3_1],
+                [r'z', r'z_d'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+    
+    ax1.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    ax3.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    
+    ax3.set_xlabel(r"$Time}[s]$", labelpad=5)
+    # Show the plot
+    plt.show()
+
+def plot_results_control(x, xp, t):
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
+
+    # Plot x_estimate with label 'x_estimate'
+    ax1.set_xticklabels([])
+    states_q = []
+    states_qp = []
+    size = x.shape[0]
+    for k in range(0, size):
+        aux_plot_1, = ax1.plot(t, x[k, 0:t.shape[0]],  lw=1.5, ls="-")
+        aux_plot_2, = ax2.plot(t, xp[k, 0:t.shape[0]], lw=1.5, ls="-")
+        states_q.append(aux_plot_1)
+        states_qp.append(aux_plot_2)
+    # Add a legend
+    ax1.legend([states_q[0], states_q[1], states_q[2], states_q[3], states_q[4]],
+                [r'q_1', r'q_2', r'q_3', r'q_4', r'q_5'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+
+    ax2.legend([states_qp[0], states_qp[1], states_qp[2], states_qp[3], states_qp[4]],
+                [r'qp_1', r'qp_2', r'qp_3', r'qp_4', r'qp_5'],
+                loc="best",
+                frameon=True, fancybox=True, shadow=False, ncol=2,
+                borderpad=0.5, labelspacing=0.5, handlelength=3, handletextpad=0.1,
+                borderaxespad=0.3, columnspacing=2)
+    
+    
+    ax1.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
+    
+    ax2.set_xlabel(r"$Time}[s]$", labelpad=5)
+    # Show the plot
+    plt.show()
 if __name__ == '__main__':
     try:
-        robot = Robot()
+        robot = Supervisor()
         main(robot)
         pass
     except(KeyboardInterrupt):
