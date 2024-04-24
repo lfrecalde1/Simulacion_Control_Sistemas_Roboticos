@@ -315,7 +315,10 @@ def plot_results(x, xd, t):
     ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
     ax3.grid(color='#949494', linestyle='-.', linewidth=0.8)
     
-    ax3.set_xlabel(r"$Time}[s]$", labelpad=5)
+    ax3.set_xlabel(r"${Tiempo}~[seg]$", labelpad=5)
+    ax3.set_ylabel(r"${Posicion}~z~[m]$", rotation='vertical')
+    ax2.set_ylabel(r"${Posicion}~y~[m]$", rotation='vertical')
+    ax1.set_ylabel(r"${Posicion}~x~[m]$", rotation='vertical')
     # Show the plot
     plt.show()
 
@@ -351,7 +354,9 @@ def plot_results_control(x, xp, t):
     ax1.grid(color='#949494', linestyle='-.', linewidth=0.8)
     ax2.grid(color='#949494', linestyle='-.', linewidth=0.8)
     
-    ax2.set_xlabel(r"$Time}[s]$", labelpad=5)
+    ax2.set_xlabel(r"${Tiempo}~[seg]$", labelpad=5)
+    ax2.set_ylabel(r"${Acciones~de~Control}~[mrad/seg]$", rotation='vertical')
+    ax1.set_ylabel(r"${Desplazamiento~angular}~[rad]$", rotation='vertical')
     # Show the plot
     plt.show()
 if __name__ == '__main__':

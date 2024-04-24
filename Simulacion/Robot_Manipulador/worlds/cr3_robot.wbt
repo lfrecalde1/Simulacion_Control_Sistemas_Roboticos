@@ -1,0 +1,73 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "../protos/Cr3Robot.proto"
+
+WorldInfo {
+  contactProperties [
+    ContactProperties {
+      material1 "InteriorWheelMat"
+      coulombFriction [
+        0, 2, 0
+      ]
+      frictionRotation -0.785 0
+      bounce 0
+      forceDependentSlip [
+        10, 0
+      ]
+    }
+    ContactProperties {
+      material1 "ExteriorWheelMat"
+      coulombFriction [
+        0, 2, 0
+      ]
+      frictionRotation 0.785 0
+      bounce 0
+      forceDependentSlip [
+        10, 0
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.2808065269613203 0.09714622574555769 -0.9548352241299619 2.503493504640488
+  position 1.4673448345727846 1.115161476813238 1.6422255750317356
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 4 4
+}
+Cr3Robot {
+  hidden translation_1 -2.483045534115713e-08 5.017540745937189e-07 -0.0002958511005054544
+  hidden rotation_1 0.9994643059442969 0.03272766041519266 -3.724288940584056e-05 2.278127456836733e-05
+  hidden position_1_0 -2.3771491573409324e-07
+  hidden translation_2 0 0 0.1283
+  hidden rotation_2 0 0 -1 2.3841857910156266e-07
+  hidden position_2_0 -2.2630436112894473e-05
+  hidden translation_3 0 0 0
+  hidden rotation_3 0.577340892080891 0.5773539577056779 -0.5773559576663528 2.0944120657748377
+  hidden position_3_0 8.744462977754851e-08
+  hidden translation_4 -0.274 0 0
+  hidden rotation_4 0 0 1 8.940696716308595e-08
+  hidden position_4_0 -2.608839925683268e-07
+  hidden translation_5 -0.23 0 0.1283
+  hidden rotation_5 0 0 -1 1.5708002608839915
+  hidden position_5_0 3.3674635450460575e-07
+  hidden translation_6 0 -0.116 0
+  hidden rotation_6 0.9999999999999717 -1.6837323227558372e-07 1.6837250376071758e-07 1.5708000000000284
+  hidden position_6_0 -1.0088464267276271e-07
+  hidden translation_7 0 0.105 0
+  hidden rotation_7 -0.9999999999999977 -5.044233782061121e-08 -5.0442119567433556e-08 1.5708000000000022
+  controller "cr3_controller"
+  supervisor TRUE
+  toolSlot [
+    DEF end_effector Solid {
+      rotation 0 1 0 0
+    }
+  ]
+}
